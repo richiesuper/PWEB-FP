@@ -13,9 +13,12 @@ if ($res) {
 	if (mysqli_num_rows($res) > 0) {
 		header("Location: register-form.php?status=userExists");
 	} else {
-
-		$register_sql = "INSERT INTO Users (email, name, password, type) VALUES ('$e', '{$n}', MD5('{$p}'), {$t})";
-		$res = mysqli_query($conn, $register_sql);
+        try{
+            $register_sql = "INSERT INTO Users (email, name, password, type, register_datetime) VALUES ('$e', '{$n}', MD5('{$p}'), {$t}, NOW())";
+            $res = mysqli_query($conn, $register_sql);
+        } catch(mysqli_sql_exception) {
+            die("Error while inserting");
+        }
 
 		if ($res) {
 			header("Location: login-form.php?status=registSuccessful");
@@ -23,4 +26,6 @@ if ($res) {
 			header("Location: register-form.php?status=registFailed");
 		}
 	}
+} else {
+    die("Error while fetching query");
 }
