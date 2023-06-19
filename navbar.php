@@ -12,6 +12,9 @@
         <li class="nav-item">
           <a class="nav-link" href="job-listing.php">Job Listing</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="job-offer-form.php">Looking For Employee</a>
+        </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
