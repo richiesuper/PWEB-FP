@@ -25,7 +25,7 @@
     if (isset($_GET['offer_id'])) {
         $id = $_GET['offer_id'];
         $fetch_jobs = "SELECT Offers.banner_path, Offers.title, Offers.descr, Users.name, Users.email, Offers.id FROM Offers INNER JOIN Users_Offers ON Offers.id=Users_Offers.offer_id INNER JOIN Users ON Users_Offers.user_id=Users.id WHERE Offers.id=$id GROUP BY Offers.id";
-        $fetch_comment = "SELECT Users.name, Comments.content FROM Comments INNER JOIN Users ON Comments.user_id=Users.id INNER JOIN Offers ON Comments.offer_id=Offers.id WHERE Offers.id=$id";
+        $fetch_comment = "SELECT Users.name, Comments.content FROM Comments INNER JOIN Users ON Comments.user_id=Users.id INNER JOIN Offers ON Comments.offer_id=Offers.id WHERE Offers.id=$id ORDER BY Comments.id ASC";
 
 
         $res_jobs = mysqli_query($conn, $fetch_jobs);
