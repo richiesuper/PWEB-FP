@@ -27,7 +27,7 @@
 			<label for="descr">Job Description</label>
 			<input id="descr" type="text" name="descr" placeholder="Describe Your Job Offer" required>
 			<label for="banner">Upload Photo</label>
-			<input type="file" name="foto">
+			<input id="banner" type="file" name="banner" required>
 			<button id="submitBtn" type="submit" name="post" class="btn btn-primary post-button">Post</button>
 		</form>
         <!-- <input type="submit" value="Post" name="post" /> -->
