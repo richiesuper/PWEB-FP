@@ -21,11 +21,13 @@
 				<h1 class="bg-danger">Offer failed due to technical problem!</h1>
 			<?php endif; ?>
 		<?php endif; ?>
-		<form action="job-offer-post.php" method="post">
+		<form action="job-offer-post.php" method="post" enctype="multipart/form-data">
 			<label for="title">Job Title</label>
 			<input id="title" type="text" name="title" placeholder="Job Offer Title" required>
 			<label for="descr">Job Description</label>
 			<input id="descr" type="text" name="descr" placeholder="Describe Your Job Offer" required>
+			<label for="banner">Banner Image</label>
+			<input id="banner" type="file" name="banner" required>
 			<button id="submitBtn" type="submit" name="post">Post</button>
 		</form>
         <!-- <input type="submit" value="Post" name="post" /> -->
