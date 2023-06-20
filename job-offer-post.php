@@ -1,38 +1,68 @@
 <?php
+session_start();
 include("database.php");
 
-// ambil data dari formulir
-$title = $_POST['title'];
-$desc = $_POST['descr'];
-$banner_path = $_FILES['foto']['name'];
-$tmp = $_FILES['foto']['tmp_name'];
+if (isset($_POST['post'])) {
 
-// Rename nama fotonya dengan menambahkan tanggal dan jam upload
-$fotobaru = date('Y-m-d H:i:s');
-$extension = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION); // Get the file extension
-$newFileName = $fotobaru . '.' . $extension; // Combine the new filename with the original file extension
+    // $title = $_POST['title'];
+    // $desc = $_POST['descr'];
 
-// Set path folder tempat menyimpan fotonya
-$uploadDirectory = 'assets/img/';
-$path = $uploadDirectory . $newFileName;
+    // $check_prior_registration_sql = "SELECT id FROM Offers WHERE title = '$title'";
+    // $res = mysqli_query($conn, $check_prior_registration_sql);
 
-if(isset($_POST['post'])){
-// if(move_uploaded_file($_FILES['foto']['tmp_name'], $path)){ // Cek apakah gambar berhasil diupload atau tidak
+    // if ($res) {
+    //     try{
+    //         $offer_sql = "INSERT INTO Offers (title, descr, pub_datetime) VALUES ('$title', '$desc', CURRENT_TIMESTAMP)";
+    //         $res = mysqli_query($conn, $offer_sql);
+    //     } catch(mysqli_sql_exception) {
+    //         die("Error while inserting");
+    //     }
+
+    //     if ($res) {
+    //         header("Location: job-listing.php?status=offerSuccessful");
+    //     } else {
+    //         header("Location: job-offer-form.php?status=offerFailed");
+    //     }
+    // } else {
+    //     die("Error while fetching query");
+    // }
+
+    // ambil data dari formulir
+    $title = $_POST['title'];
+    $desc = $_POST['descr'];
+    $banner = $_FILES['banner']['name'];
+    $banner_tmp_path = $_FILES['banner']['tmp_name'];
+    $banner_storage_path = "assets/img/offer_banners/" . date("YmdHis") . $banner;
 
     // buat query
-    $sql = "INSERT INTO Offers (title, descr, banner_path, pub_datetime) VALUES ('$title', '$desc', '$newFileName', CURRENT_TIMESTAMP)";
+    $sql = "INSERT INTO Offers (title, descr, banner_path, pub_datetime) VALUES ('$title', '$desc', '$banner_storage_path', CURRENT_TIMESTAMP)";
     $query = mysqli_query($conn, $sql);
 
     // apakah query simpan berhasil?
-    if( $query ) {
-        // kalau berhasil alihkan ke halaman index.php dengan status=sukses
-        header('Location: job-listing.php?status=sukses');
+    if ($query) {
+        if (move_uploaded_file($banner_tmp_path, $banner_storage_path)) {
+            $offerIdSQL = "SELECT id FROM Offers ORDER BY id DESC LIMIT 1";
+            $offerIdQuery = mysqli_query($conn, $offerIdSQL);
+            if ($offerIdQuery) {
+                $row = mysqli_fetch_assoc($offerIdQuery);
+                $usersOffersSQL = "INSERT INTO Users_Offers (offer_id, user_id) VALUES ({$row['id']}, {$_SESSION['id']})";
+                $usersOffersQuery = mysqli_query($conn, $usersOffersSQL);
+                if ($usersOffersQuery) {
+                    // kalau berhasil alihkan ke halaman index.php dengan status=sukses
+                    header('Location: job-listing.php?status=sukses');
+                } else {
+                    header('Location: job-offer-form.php?status=gagal');
+                }
+            } else {
+                header('Location: job-offer-form.php?status=gagal');
+            }
+        } else {
+            header('Location: job-offer-form.php?status=gagal');
+        }
     } else {
         // kalau gagal alihkan ke halaman indek.php dengan status=gagal
         header('Location: job-offer-form.php?status=gagal');
     }
-}
-
-else {
+} else {
     die("Access denied.");
 }
