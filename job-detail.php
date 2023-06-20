@@ -46,14 +46,14 @@
         echo "        <div>";
         echo "            <h5 class=\"card-title\">$num_comment Komentar</h5>";
         echo "            <form class=\"my-2\" action=\"comment.php\" method=\"post\" enctype=\"multipart/form-data\">";
-        echo "                <img class=\"card-img-top mx-2\" src=\"/PWEB-FP/assets/img/profilephoto.jpg\" alt=\"Banner pekerjaan\" style=\"width: 30px; border-radius: 50%\">";
+        echo "                <img class=\"card-img-top mx-2\" src=\"assets/img/profilephoto.jpg\" alt=\"Banner pekerjaan\" style=\"width: 30px; border-radius: 50%\">";
         echo "                <input id=\"content\" type=\"text\" name=\"content\" placeholder=\"Add a comment\">";
         echo "                <input name=\"offer_id\" value=\"{$id}\" style=\"display: none;\">";
         echo "                <button id=\"submitBtn\" type=\"submit\" name=\"post\" class=\"btn btn-primary post-button\">Submit</button>";
         echo "            </form>";
         while($row_comment = mysqli_fetch_assoc($res_comment)) {
             echo "<div>";
-            echo "    <img class=\"card-img-top mx-2\" src=\"/PWEB-FP/assets/img/profilephoto.jpg\" alt=\"Banner pekerjaan\" style=\"width: 30px; border-radius: 50%;\">";
+            echo "    <img class=\"card-img-top mx-2\" src=\"assets/img/profilephoto.jpg\" alt=\"Banner pekerjaan\" style=\"width: 30px; border-radius: 50%;\">";
             echo "    <span>" . $row_comment['name'] . "</span>";
             echo "    <p class=\"mx-5\">" . $row_comment['content'] . "</p>";
             echo "</div>";
