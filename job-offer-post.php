@@ -35,7 +35,7 @@ if (isset($_POST['post'])) {
     $banner_storage_path = "assets/img/offer_banners/" . date("YmdHis") . $banner;
 
     // buat query
-    $sql = "INSERT INTO Offers (title, descr, banner_path) VALUES ('$title', '$desc', '$banner_storage_path')";
+    $sql = "INSERT INTO Offers (title, descr, banner_path, pub_datetime) VALUES ('$title', '$desc', '$banner_storage_path', CURRENT_TIMESTAMP)";
     $query = mysqli_query($conn, $sql);
 
     // apakah query simpan berhasil?
@@ -45,7 +45,7 @@ if (isset($_POST['post'])) {
             $offerIdQuery = mysqli_query($conn, $offerIdSQL);
             if ($offerIdQuery) {
                 $row = mysqli_fetch_assoc($offerIdQuery);
-                $usersOffersSQL = "INSERT INTO Users_Offers (offer_id, user_id) VALUES ({row['id']}, {$_SESSION['id']})";
+                $usersOffersSQL = "INSERT INTO Users_Offers (offer_id, user_id) VALUES ({$row['id']}, {$_SESSION['id']})";
                 $usersOffersQuery = mysqli_query($conn, $usersOffersSQL);
                 if ($usersOffersQuery) {
                     // kalau berhasil alihkan ke halaman index.php dengan status=sukses

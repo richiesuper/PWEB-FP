@@ -14,7 +14,7 @@ if ($res) {
 		header("Location: register-form.php?status=userExists");
 	} else {
         try{
-            $register_sql = "INSERT INTO Users (email, name, password, type) VALUES ('$e', '{$n}', MD5('{$p}'), {$t})";
+            $register_sql = "INSERT INTO Users (email, name, password, type, register_datetime) VALUES ('$e', '{$n}', MD5('{$p}'), {$t}, CURRENT_TIMESTAMP)";
             $res = mysqli_query($conn, $register_sql);
         } catch(mysqli_sql_exception) {
             die("Error while inserting");
