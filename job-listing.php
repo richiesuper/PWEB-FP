@@ -20,31 +20,47 @@
 
 <body>
 	<?php include("navbar.php"); ?>
-    <div></div>
-    <div class=".container d-flex justify-content-center align-items-center">
-        <div class ="bg-primary">
+    <div>
+        <h2>Available Jobs</h2>
+    </div>
+
+    <div class="container-fluid align-items-center justify-content-center bg-primary">
+        <div class="mx-auto">
             <?php
-                include("database.php");
-                $fetch_jobs = "SELECT * FROM Offers INNER JOIN Users_Offers ON Offers.id=Users_Offers.offer_id INNER JOIN Users ON Users_Offers.user_id=Users.id GROUP BY Offers.id";
-                $res = mysqli_query($conn, $fetch_jobs);
-                if($res) {
-                    while($row = mysqli_fetch_assoc($res)) {
-                        echo "<div class=\"card m-3\" style=\"width: 65%;\">";
-                        echo "    <div class=\"card-body\">";
-                        echo "        <h5 class=\"card-title\">".$row['title']."</h5>";
-                        echo "        <img class=\"card-img-top\" src=\"".$row['banner_path']."\" alt=\"Banner pekerjaan\">";
-                        echo "        <br><br>";
-                        echo "        <h6 class=\"card-subtitle mb-2 text-muted\">Ditawarkan oleh: ".$row['name']."</h6>";
-                        echo "        <p class=\"card-text\">".$row['descr']."</p>";
-                        echo "        <a href=\"job-detail.php\" class=\"card-link\">Info selengkapnya</a>";
-                        echo "    </div>";
-                        echo "</div>";
+            include("database.php");
+            $fetch_jobs = "SELECT * FROM Offers INNER JOIN Users_Offers ON Offers.id=Users_Offers.offer_id INNER JOIN Users ON Users_Offers.user_id=Users.id GROUP BY Offers.id";
+            $res = mysqli_query($conn, $fetch_jobs);
+            if ($res) {
+                $counter = 0;
+                while ($row = mysqli_fetch_assoc($res)) {
+                    if ($counter % 2 == 0) {
+                        echo '<div class="row">';
+                    }
+                    
+                    echo '<div class="card m-3 col-4">';
+                    echo '    <div class="card-body">';
+                    echo '        <h5 class="card-title">' . $row['title'] . '</h5>';
+                    echo '        <img class="card-img-top" src="' . $row['banner_path'] . '" alt="Banner pekerjaan">';
+                    echo '        <br><br>';
+                    echo '        <h6 class="card-subtitle mb-2 text-muted">Ditawarkan oleh: ' . $row['name'] . '</h6>';
+                    echo '        <p class="card-text">' . $row['descr'] . '</p>';
+                    echo '        <a href="job-detail.php" class="card-link">Info selengkapnya</a>';
+                    echo '    </div>';
+                    echo '</div>';
+                    
+                    $counter++;
+                    
+                    if ($counter % 2 == 0) {
+                        echo '</div>';
                     }
                 }
+                
+                if ($counter % 2 != 0) {
+                    echo '</div>';
+                }
+            }
             ?>
         </div>
-</div>
-    
+    </div>
 </body>
-
 </html>
