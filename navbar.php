@@ -9,12 +9,16 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="job-listing.php">Job Listing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="job-offer-form.php">Looking For Employee</a>
-        </li>
+        <?php if (isset($_SESSION['email'])) : ?>
+          <li class="nav-item">
+            <a class="nav-link" href="job-listing.php">Job Listing</a>
+          </li>
+          <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 2) : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="job-offer-form.php">Looking For Employee</a>
+            </li>
+          <?php endif; ?>
+        <?php endif; ?>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -22,9 +26,9 @@
         </li>
         <?php
         if (!isset($_SESSION['email'])) {
-            echo "<li class=\"nav-item\">";
-            echo "  <a class=\"nav-link\" href=\"register-form.php\">Register</a>";
-            echo "</li>";
+          echo "<li class=\"nav-item\">";
+          echo "  <a class=\"nav-link\" href=\"register-form.php\">Register</a>";
+          echo "</li>";
         }
         ?>
       </ul>
