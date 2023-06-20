@@ -39,7 +39,7 @@
                     }
                     
                     $variableValue = $row['id'];
-                    $linkUrl = "job-detail.php?variable=" . urlencode($variableValue);
+                    $linkUrl = "job-detail.php?offer_id=" . urlencode($variableValue);
 
                     echo "<div class=\"card m-3 col-4\">";
                     echo "    <div class=\"card-body\">";
