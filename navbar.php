@@ -33,8 +33,8 @@
         ?>
       </ul>
       <?php if ($_SERVER['SCRIPT_NAME'] == "/job-listing.php") : ?>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" role="search" method="get">
+          <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-danger" type="submit">Search</button>
         </form>
       <?php endif; ?>

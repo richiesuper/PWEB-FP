@@ -28,7 +28,11 @@
         <div>
             <?php
             include("database.php");
-            $fetch_jobs = "SELECT Offers.banner_path, Offers.title, Offers.descr, Users.name, Offers.id FROM Offers INNER JOIN Users_Offers ON Offers.id=Users_Offers.offer_id INNER JOIN Users ON Users_Offers.user_id=Users.id GROUP BY Offers.id";
+            $fetch_jobs = "SELECT Offers.banner_path, Offers.title, Offers.descr, Users.name, Offers.id FROM Offers INNER JOIN Users_Offers ON Offers.id=Users_Offers.offer_id INNER JOIN Users ON Users_Offers.user_id=Users.id";
+            if (isset($_GET['search'])) {
+                $q = $_GET['search'];
+                $fetch_jobs = $fetch_jobs . " WHERE Offers.title LIKE '%{$q}%' OR Offers.descr LIKE '%{$q}%' OR Users.name LIKE '%{$q}%'";
+            }
             $res = mysqli_query($conn, $fetch_jobs);
 
             if ($res) {
